@@ -81,8 +81,7 @@ namespace WinMLHelloWorld.ViewModels
 
         public async Task RecognizeImageBitmap()
         {
-            ImageViewerVisibilityState = Visibility.Visible;
-            CameraViewerVisibilityState = Visibility.Collapsed;
+            HideCameraView();
 
             var softwareBitmap = await GetSoftwareBitmapAsync(ImageLocation);
             if (softwareBitmap != null)
@@ -314,9 +313,25 @@ namespace WinMLHelloWorld.ViewModels
         /// </summary>
         public Visibility CameraOptionVisibilityState => this.CameraNames?.Count() > 0 == true ? Visibility.Visible : Visibility.Collapsed;
 
-        public Visibility ImageViewerVisibilityState { get; set; } = Visibility.Visible;
+        private Visibility _imageViewerVisibilityState= Visibility.Visible;
+        public Visibility ImageViewerVisibilityState
+        {
+            get { return _imageViewerVisibilityState; }
+            set { Set(ref _imageViewerVisibilityState, value); }
+        }
 
-        public Visibility CameraViewerVisibilityState { get; set; } = Visibility.Collapsed;
+        private Visibility _cameraViewerVisibilityState = Visibility.Collapsed;
+        public Visibility CameraViewerVisibilityState
+        {
+            get { return _cameraViewerVisibilityState; }
+            set { Set(ref _cameraViewerVisibilityState, value); }
+        }
+
+        private void HideCameraView()
+        {
+            ImageViewerVisibilityState = Visibility.Visible;
+            CameraViewerVisibilityState = Visibility.Collapsed;
+        }
 
         #endregion
     }

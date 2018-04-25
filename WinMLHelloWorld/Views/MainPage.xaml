@@ -79,7 +79,7 @@
                    VerticalAlignment="Center"
                    Width="227"
                    Height="227"
-                   Visibility="{x:Bind ViewModel.ImageViewerVisibilityState}"
+                   Visibility="{x:Bind ViewModel.ImageViewerVisibilityState, Mode=OneWay}"
                    Source="{x:Bind ViewModel.ImageLocation, Mode=OneWay}" />
             <ctl:CameraControl x:Name="cameraControl" 
                                Grid.Row="0"
@@ -87,7 +87,7 @@
                                VerticalAlignment="Center"
                                Width="227"
                                Height="227"
-                               Visibility="{x:Bind ViewModel.CameraViewerVisibilityState}" />
+                               Visibility="{x:Bind ViewModel.CameraViewerVisibilityState, Mode=OneWay}" />
 
             <StackPanel Grid.Row="1"
                         Margin="20, 0, 20, 20">
@@ -112,7 +112,8 @@
 
             <CommandBar Grid.Row="2">
                 <AppBarButton Icon="Video"
-                              Label="Camera" Click="OnWebCameraButtonClicked" />
+                              Label="Camera"
+                              Click="OnWebCameraButtonClicked" />
                 <AppBarButton x:Name="OpenImagePicker"
                               Icon="Pictures"
                               Label="Charger une image">
@@ -122,7 +123,8 @@
                                 <GridView x:Name="imagePickerGridView"
                                           ItemsSource="{x:Bind ViewModel.InputFiles}"
                                           SelectionMode="Single"
-                                          SelectedItem="{x:Bind ViewModel.ImageLocation, Mode=TwoWay}">
+                                          SelectedItem="{x:Bind ViewModel.ImageLocation, Mode=TwoWay}"
+                                          SelectionChanged="imagePickerGridView_SelectionChanged">
                                     <GridView.ItemTemplate>
                                         <DataTemplate x:DataType="imaging:BitmapImage">
                                             <Border Margin="6">
@@ -136,7 +138,7 @@
 
                                 </GridView>
                                 <Button Content="Parcourir..."
-                                        Click="{x:Bind ViewModel.OpenImagePicker}" />
+                                        Click="OnBrowseButtonClicked" />
                             </StackPanel>
                         </Flyout>
                     </AppBarButton.Flyout>
